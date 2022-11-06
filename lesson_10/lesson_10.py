@@ -76,3 +76,16 @@ while read_success and current_frame_number < frame_count:
     current_frame_number += 1
 
 vcap.release()
+
+"""
+# Step 6
+
+Results comparison:
+
+'MIL' – correctly detected the object only for the first few frames. As soon as the object abruptly changed its position (moved to the right by ~50 pixels), the detector lost it. However, until the end of the video, the status of the detector was TRUE, although it tracked "garbage", and in the middle of the video it caught a cloud and tracked it for quite some time.
+
+'KCF' - lost object at the same moment as MIL, but changed its status to FALSE and did not give false positive results until the end of the video. This behavior is better than that of MIL in my opinion.
+
+'CSRT' - This detector tracked the object very well. Adapted to changing the position and size of the object. It is robust to a slight overlap of an object by another object in time (up to ~10 frames). Lost objects when it was overlap by another for ~20+ frames. After losing the object and several frames of false positive detection, it changed its status to FALSE. Best result in my opinion.
+"""
+
